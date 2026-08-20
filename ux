@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Aventura Interativa</title>
+  <style>
+    .passo {
+      display: none;
+    }
+
+    .passo.active {
+      display: block;
+    }
+
+    .btn-avancar {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .btn-avancar:hover {
+      background-color: #45a049;
+    }
+
+    .btn-voltar {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .btn-voltar:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="passo1" class="passo active">
+    <p>Você está na entrada da caverna. O que deseja fazer?</p>
+    <button class="btn-avancar" data-avancar="passo2">Entrar na caverna</button>
+  </div>
+
+  <div id="passo2" class="passo">
+    <p>Você entrou na caverna. Há um caminho à esquerda e outro à direita.</p>
+    <button class="btn-avancar" data-avancar="passo3">Seguir para a sala seguinte</button>
+    <button class="btn-voltar" data-voltar="passo1">Voltar para a entrada</button>
+  </div>
+
+  <div id="passo3" class="passo">
+    <p>Você encontrou um tesouro! O que deseja fazer?</p>
+    <button class="btn-voltar" data-voltar="passo2">Voltar para a caverna</button>
+  </div>
+
+  <script>
+    // Função para avançar
+    const botoesAvancar = document.querySelectorAll('.btn-avancar');
+    botoesAvancar.forEach(botao => {
+      botao.addEventListener('click', () => {
+        const passoAtual = botao.closest('.passo');
+        const proximoPassoId = botao.getAttribute('data-avancar');
+        const proximoPasso = document.getElementById(proximoPassoId);
+
+        passoAtual.classList.remove('active');
+        proximoPasso.classList.add('active');
+      });
+    });
+
+    // Função para voltar
+    const botoesVoltar = document.querySelectorAll('.btn-voltar');
+    botoesVoltar.forEach(botao => {
+      botao.addEventListener('click', () => {
+        const passoAtual = botao.closest('.passo');
+        const passoAnteriorId = botao.getAttribute('data-voltar');
+        const passoAnterior = document.getElementById(passoAnteriorId);
+
+        passoAtual.classList.remove('active');
+        passoAnterior.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
